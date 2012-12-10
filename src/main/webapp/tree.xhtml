@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	>
+
+<h:head> 
+    <o:conditionalComment if="lte IE 8">
+    <h:outputScript library="js" name="excanvas.min.js"></h:outputScript>
+    </o:conditionalComment>
+    <h:outputScript library="js" name="jquery.flot.js"></h:outputScript>
+    <h:outputScript library="js" name="ajaxPlot.js"></h:outputScript>
+    <h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+    
+</h:head>
+<body >
+	<h:form id="form">
+
+		<p:growl id="messages" showDetail="true" />
+		
+	    
+
+		<p:layout fullPage="true" stateful="true" >
+		
+		<p:layoutUnit position="west" size="330" header="Categories" resizable="true" >
+		<p:tree id="treeSingle" ajax="true" animate="true" value="#{categoriesTreeBean.root}" var="node"
+			selectionMode="single" selection="#{categoriesTreeBean.selectedNode}" style="border:0; " >
+
+			<p:treeNode>
+				<h:outputText value="#{node}" />
+			</p:treeNode>
+			
+			<p:ajax event="select" update=":form:plot_panel" listener="#{categoriesTreeBean.onNodeSelect}" /> 
+		</p:tree>
+
+		</p:layoutUnit>
+		<p:layoutUnit position="center" header="Time data series">  
+		<p:panel id="plot_panel">
+			<a id="data_link" class="hidden" href="./rest/data/#{categoriesTreeBean.selectedNode.data.id}" style="display: none;">Plot data</a> 
+			<!--  <div id="placeholder" style="width:600px;height:300px;"></div>-->
+			 <div id="placeholder" style="height: 500px;width:98%;"></div>
+		</p:panel>
+		</p:layoutUnit>
+		</p:layout>
+	</h:form>
+   <p:ajaxStatus  onsuccess="loadPlotData()" /> 
+	
+    <ui:debug />
+
+</body>
+</html>
