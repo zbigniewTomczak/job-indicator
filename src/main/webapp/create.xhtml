@@ -8,24 +8,10 @@
     <ui:define name="content">
         <h:messages />
         <h:form>
-            <h:panelGrid columns="3">
-                <h:outputLabel for="username">Enter username:</h:outputLabel>
-                <h:inputText id="username" value="#{newUser.username}" />
-                <h:message for="username" />
-
-                <h:outputLabel for="firstName">Enter first name:</h:outputLabel>
-                <h:inputText id="firstName" value="#{newUser.firstName}" />
-                <h:message for="firstName" />
-
-                <h:outputLabel for="lastName">Enter last name:</h:outputLabel>
-                <h:inputText id="lastName" value="#{newUser.lastName}" />
-                <h:message for="lastName" />
-
-            </h:panelGrid>
-            <h:commandButton action="#{createController.create}"
-                value="Add User" />
+           
+            <h:commandButton action="#{categoriesTreeBean.create}"
+                value="Populate data" />
         </h:form>
-        <h:link outcome="/greet.xhtml">Greet a user!</h:link>
     </ui:define>
 </ui:composition>
 </html>

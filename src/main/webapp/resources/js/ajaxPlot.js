@@ -4,7 +4,13 @@ function loadPlotData() {
         var options = {
                 lines: { show: true },
                 points: { show: true },
-                xaxis: { tickDecimals: 0, tickSize: 1 }
+                xaxis: { 
+                		mode: "time",
+                		timeformat: "%y-%m-%d"
+                		},
+                yaxis: {
+                	tickDecimals: 0
+                }
             };
         var data = [];
         var placeholder = $("#placeholder");
@@ -29,7 +35,8 @@ function loadPlotData() {
             method: 'GET',
             dataType: 'json',
             success: onDataReceived,
-            global: false
+            global: false,
+            
         });
     };
     

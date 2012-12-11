@@ -34,6 +34,16 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	
+	public void accept(CategoryVisitor visitor) {
+		visitor.visit(this);
+		if(childCategories != null) {
+			for (Category child: childCategories) {
+				child.accept(visitor);
+			}
+		}
+		
+	}   
+	
 	@Override
 	public String toString() {
 		return name != null ? name : super.toString();
@@ -79,6 +89,7 @@ public class Category implements Serializable {
 	}
 	public void setChildCategories(List<Category> childCategories) {
 		this.childCategories = childCategories;
-	}   
+	}
+
    
 }

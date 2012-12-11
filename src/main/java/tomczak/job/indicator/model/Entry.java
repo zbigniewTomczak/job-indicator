@@ -22,7 +22,7 @@ import javax.persistence.UniqueConstraint;
 		@NamedQuery(name=Entry.SELECT_BY_SITE,query="SELECT e FROM Entry e WHERE e.category.site.id = :siteId")
 })
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"category_id", "date"}))
-public class Entry implements Serializable {
+public class Entry implements Serializable, Comparable<Entry> {
 
 	public static final String SELECT_BY_DATE_AND_CATEGORY = "Entry.getByDateAndCategory";
 	public static final String SELECT_BY_CATEGORY = "Entry.getByCategory";
@@ -39,6 +39,34 @@ public class Entry implements Serializable {
 	private Date date;
 	
 	private Integer number;
+	
+	@Override
+	public int compareTo(Entry o) {
+		if (date != null && o.getDate() != null) {
+			return date.compareTo(o.getDate());
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public int hashCode() {
+		if (id != null) {
+			return id.hashCode();
+		}
+		
+		return super.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj instanceof Entry && id != null) {
+			return id.equals(((Entry) obj).getId());
+		}
+		
+		return super.equals(obj);		
+	}
 	
 	@Override
 	public String toString() {

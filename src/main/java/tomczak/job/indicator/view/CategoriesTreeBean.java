@@ -1,5 +1,8 @@
 package tomczak.job.indicator.view;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
@@ -8,6 +11,8 @@ import javax.inject.Inject;
 
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.TreeNode;
+
+import tomczak.job.indicator.helper.DataRetrievalJob;
 
 @Model
 public class CategoriesTreeBean {
@@ -46,4 +51,16 @@ public class CategoriesTreeBean {
 		this.selectedNode = selectedNode;
 	}
 
+	@Inject DataRetrievalJob job;
+	public void create() {
+		try {
+			job.populateData();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

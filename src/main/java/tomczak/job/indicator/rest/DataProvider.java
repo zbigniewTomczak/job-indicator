@@ -7,10 +7,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/data")
+//@Path("/data")
 @RequestScoped
 public class DataProvider {
-	@Inject ChartData data;
+	ChartData data;
+	
+	
+	public DataProvider() {
+		//this.data = new ChartData("koko", produceData());
+	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -18,7 +23,7 @@ public class DataProvider {
 		return data;
 	}
 	
-	@javax.enterprise.inject.Produces
+	//@javax.enterprise.inject.Produces
 	public static double[][] produceData() {
 		double[][] data = new double[10][];
 		data[0] = new double[]{1999, 3.0};

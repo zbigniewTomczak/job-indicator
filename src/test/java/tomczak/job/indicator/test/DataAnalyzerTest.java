@@ -76,7 +76,7 @@ public class DataAnalyzerTest {
 		
 		da.updateDataForSite(site.getId());
 		
-		assertEquals(1, er.getEntriesForCategory(subcategory).size());
-		assertNotNull(er.getEntriesForCategory(subcategory).get(0).getNumber());
+		assertEquals(1, er.getEntriesForCategoryId(subcategory.getId()).size());
+		assertNotNull(er.getEntriesForCategoryId(subcategory.getId()).get(0).getNumber());
 	}
 }

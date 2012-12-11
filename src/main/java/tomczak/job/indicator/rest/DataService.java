@@ -11,22 +11,37 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tomczak.job.indicator.ejb.EntityHelper;
+import tomczak.job.indicator.helper.Initial;
 import tomczak.job.indicator.model.Category;
+import tomczak.job.indicator.model.Site;
 
-@Path("/data/{id:[0-9][0-9]*}")
+@Path("/")
 @RequestScoped
 public class DataService {
-	@Inject ChartData data;
 	@Inject EntityHelper entityHelper;
+	@Inject tomczak.job.indicator.helper.DataProvider dataProvider;
+	@Inject @Initial Long siteId;
 	
 	@GET
+	@Path("/data/{id:[0-9][0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ChartData getData(@PathParam("id") long id) {
 		Category category = entityHelper.findById(Category.class, id);
 	    if (category == null) {
 	    	throw new WebApplicationException(Response.Status.NOT_FOUND);
 	    }
-	    //TODO retrieve real data
-		return data;
+	    return new ChartData(category.getName(), dataProvider.getDataForCategoryId(category.getId()));
 	}
+	
+	@GET
+	@Path("/data")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ChartData getRootData() {
+		Site site = entityHelper.findById(Site.class, siteId);
+	    if (site == null) {
+	    	throw new WebApplicationException(Response.Status.NOT_FOUND);
+	    }
+	    return new ChartData(site.getName(), dataProvider.getDataForSiteId(siteId));
+	}
+	
 }
