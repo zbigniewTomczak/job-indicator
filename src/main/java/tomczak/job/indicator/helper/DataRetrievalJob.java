@@ -22,7 +22,7 @@ public class DataRetrievalJob {
 	@Inject @New DataAnalyzer da;
 	@Inject Logger logger;
 	
-	@Schedule(hour="*", minute="*/5")
+	@Schedule(hour="16")
 	public void populateData() throws MalformedURLException, IOException {
 		logger.info("Populating data"); 
 		long entriesNumberBefore = eh.getTotalQuantity(Entry.class);
